@@ -1,3 +1,0 @@
-;(executable
-; (name main)
-; (libraries aoc fmt str containers iter))
