@@ -24,7 +24,7 @@ let get ~env ~uri ~token =
   let conn = Eztls.client_of_flow env#tls ~host conn in
   Logs.info (fun f -> f "TLS connected");
   let http_response, reader =
-    Cohttp_eio.Client.get ~headers ~conn (host, None) (Uri.path_and_query uri)
+    Cohttp_eio.Client.get ~headers ~conn ~host env (Uri.path_and_query uri)
   in
   match Http.Response.status http_response with
   | `OK ->

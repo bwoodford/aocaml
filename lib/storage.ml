@@ -8,12 +8,14 @@ let rec ensuredir path =
   | parent -> (
       Logs.info (fun f -> f "%s" parent);
       ensuredir (dir, parent);
-      try Eio.Path.mkdir ~perm:0o700 (dir, parent)
-      with Eio.Fs.Already_exists _ -> ())
+      try 
+        Eio.Path.mkdir ~perm:0o700 (dir, parent)
+      with Eio.Io _ -> ())
+      
 
 let exists path =
   try Eio.Path.with_open_in path @@ fun _ -> true
-  with Eio.Fs.Not_found _ -> false
+  with Eio.Io _ -> false
 
 let prompt_token ~file () =
   let () =
